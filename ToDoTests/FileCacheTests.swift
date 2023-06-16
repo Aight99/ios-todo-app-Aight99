@@ -25,12 +25,12 @@ final class FileCacheTests: XCTestCase {
         fileCache = nil
     }
 
-    func testReadWrite() throws {
+    func testJsonReadWrite() throws {
         XCTAssertNoThrow(try fileCache.saveJsonOnDevice(filename: "aaa"))
         XCTAssertNoThrow(try fileCache.loadTodoItemsFromJson(filename: "aaa"))
     }
     
-    func testManyFiles() throws {
+    func testJsonManyFiles() throws {
         let firstItems = fileCache.todoItems
         XCTAssertNoThrow(try fileCache.saveJsonOnDevice(filename: "aaa"))
         fileCache.add(todo: TodoItem(text: "Y&&Y", importance: .important, isComplete: true))
@@ -44,7 +44,7 @@ final class FileCacheTests: XCTestCase {
         XCTAssertTrue(secondItems.count == fileCache.todoItems.count)
     }
     
-    func testRewrite() throws {
+    func testJsonRewrite() throws {
         let firstItems = fileCache.todoItems
         XCTAssertNoThrow(try fileCache.saveJsonOnDevice(filename: "aaa"))
         fileCache.remove(todoId: firstItems[0].id)
@@ -54,7 +54,40 @@ final class FileCacheTests: XCTestCase {
         XCTAssertTrue(firstItems.count > fileCache.todoItems.count)
     }
     
-    func testNotExist() throws {
-        XCTAssertThrowsError(try fileCache.loadTodoItemsFromJson(filename: "sad"))
+    func testJsonNotExist() throws {
+        XCTAssertThrowsError(try fileCache.loadTodoItemsFromJson(filename: "neverGonnaGiveYouUp"))
+    }
+    
+    func testCsvReadWrite() throws {
+        XCTAssertNoThrow(try fileCache.saveCsvOnDevice(filename: "cat"))
+        XCTAssertNoThrow(try fileCache.loadTodoItemsFromCsv(filename: "cat"))
+    }
+    
+    func testCsvManyFiles() throws {
+        let firstItems = fileCache.todoItems
+        XCTAssertNoThrow(try fileCache.saveCsvOnDevice(filename: "cat"))
+        fileCache.add(todo: TodoItem(text: "Y&&Y", importance: .important, isComplete: true))
+        let secondItems = fileCache.todoItems
+        XCTAssertTrue(firstItems.count < secondItems.count)
+        XCTAssertNoThrow(try fileCache.saveCsvOnDevice(filename: "kitty"))
+        
+        XCTAssertNoThrow(try fileCache.loadTodoItemsFromCsv(filename: "cat"))
+        XCTAssertTrue(firstItems.count == fileCache.todoItems.count)
+        XCTAssertNoThrow(try fileCache.loadTodoItemsFromCsv(filename: "kitty"))
+        XCTAssertTrue(secondItems.count == fileCache.todoItems.count)
+    }
+    
+    func testCsvRewrite() throws {
+        let firstItems = fileCache.todoItems
+        XCTAssertNoThrow(try fileCache.saveCsvOnDevice(filename: "cat"))
+        fileCache.remove(todoId: firstItems[0].id)
+        XCTAssertTrue(firstItems.count > fileCache.todoItems.count)
+        XCTAssertNoThrow(try fileCache.saveCsvOnDevice(filename: "cat"))
+        XCTAssertNoThrow(try fileCache.loadTodoItemsFromCsv(filename: "cat"))
+        XCTAssertTrue(firstItems.count > fileCache.todoItems.count)
+    }
+    
+    func testCsvNotExist() throws {
+        XCTAssertThrowsError(try fileCache.loadTodoItemsFromCsv(filename: "neverGonnaLetYouDown"))
     }
 }

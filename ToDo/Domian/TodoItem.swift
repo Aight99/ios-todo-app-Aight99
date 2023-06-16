@@ -111,3 +111,70 @@ extension TodoItem {
         )
     }
 }
+
+extension TodoItem {
+    
+    var csv: String {
+        var importanceString = ""
+        if self.importance != Importance.normal {
+            importanceString = self.importance.rawValue
+        }
+        var deadlineString = ""
+        if let deadline = self.deadline?.timeIntervalSince1970 {
+            deadlineString = String(deadline)
+        }
+        var modificationString = ""
+        if let modification = self.modificationDate?.timeIntervalSince1970 {
+            modificationString = String(modification)
+        }
+        let creationString = String(self.creationDate.timeIntervalSince1970)
+        
+        let dataArray: [String] = [
+            self.id,
+            self.text,
+            importanceString,
+            deadlineString,
+            String(self.isComplete),
+            creationString,
+            modificationString
+        ]
+        
+        return dataArray.joined(separator: ";")
+    }
+    
+    static func parse(csv: String) -> TodoItem? {
+        let csvArray = csv.components(separatedBy: ";")
+        guard let creationTimeInterval = TimeInterval(csvArray[5]),
+              csvArray.count == 7,
+              csvArray[4] == "true" || csvArray[4] == "false" else {
+            return nil
+        }
+        
+        let id = csvArray[0]
+        let text = csvArray[1]
+        let importance = Importance(rawValue: csvArray[2]) ?? .normal
+        let isComplete = csvArray[4] == "true"
+        let creation = Date(timeIntervalSince1970: creationTimeInterval)
+                
+        var deadline: Date? = nil
+        if let deadlineTimeInterval = TimeInterval(csvArray[3]) {
+            deadline = Date(timeIntervalSince1970: deadlineTimeInterval)
+        }
+        var modification: Date? = nil
+        if let modificationTimeInterval = TimeInterval(csvArray[6]) {
+            modification = Date(timeIntervalSince1970: modificationTimeInterval)
+        }
+        
+        return TodoItem(
+            id: id,
+            text: text,
+            importance: importance,
+            deadline: deadline,
+            isComplete: isComplete,
+            creationDate: creation,
+            modificationDate: modification
+        )
+    }
+    
+    
+}

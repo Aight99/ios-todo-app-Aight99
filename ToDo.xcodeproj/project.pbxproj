@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B65D96762A3CFD3900C489A3 /* FileCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65D96752A3CFD3900C489A3 /* FileCacheTests.swift */; };
+		B65D96782A3D1B4A00C489A3 /* ToDoCsvTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65D96772A3D1B4A00C489A3 /* ToDoCsvTests.swift */; };
 		B666F8AD2A3B781E00FB9051 /* TodoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = B666F8AC2A3B781E00FB9051 /* TodoItem.swift */; };
 		B666F8AF2A3B785800FB9051 /* FileCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = B666F8AE2A3B785800FB9051 /* FileCache.swift */; };
 		B67CA2F92A3A15D400FCEC8E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67CA2F82A3A15D400FCEC8E /* AppDelegate.swift */; };
@@ -39,6 +40,7 @@
 
 /* Begin PBXFileReference section */
 		B65D96752A3CFD3900C489A3 /* FileCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCacheTests.swift; sourceTree = "<group>"; };
+		B65D96772A3D1B4A00C489A3 /* ToDoCsvTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoCsvTests.swift; sourceTree = "<group>"; };
 		B666F8AC2A3B781E00FB9051 /* TodoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItem.swift; sourceTree = "<group>"; };
 		B666F8AE2A3B785800FB9051 /* FileCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCache.swift; sourceTree = "<group>"; };
 		B67CA2F52A3A15D400FCEC8E /* ToDo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDo.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -126,6 +128,7 @@
 		B67CA30E2A3A15D700FCEC8E /* ToDoTests */ = {
 			isa = PBXGroup;
 			children = (
+				B65D96772A3D1B4A00C489A3 /* ToDoCsvTests.swift */,
 				B65D96752A3CFD3900C489A3 /* FileCacheTests.swift */,
 				B67CA30F2A3A15D700FCEC8E /* ToDoJsonTests.swift */,
 			);
@@ -283,6 +286,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B65D96782A3D1B4A00C489A3 /* ToDoCsvTests.swift in Sources */,
 				B65D96762A3CFD3900C489A3 /* FileCacheTests.swift in Sources */,
 				B67CA3102A3A15D700FCEC8E /* ToDoJsonTests.swift in Sources */,
 			);
