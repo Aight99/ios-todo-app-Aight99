@@ -47,7 +47,7 @@ final class FileCacheTests: XCTestCase {
     func testJsonRewrite() throws {
         let firstItems = fileCache.todoItems
         XCTAssertNoThrow(try fileCache.saveJsonOnDevice(filename: "aaa"))
-        fileCache.remove(todoId: firstItems[0].id)
+        fileCache.remove(todoId: firstItems.first?.value.id ?? "")
         XCTAssertTrue(firstItems.count > fileCache.todoItems.count)
         XCTAssertNoThrow(try fileCache.saveJsonOnDevice(filename: "aaa"))
         XCTAssertNoThrow(try fileCache.loadTodoItemsFromJson(filename: "aaa"))
@@ -80,7 +80,7 @@ final class FileCacheTests: XCTestCase {
     func testCsvRewrite() throws {
         let firstItems = fileCache.todoItems
         XCTAssertNoThrow(try fileCache.saveCsvOnDevice(filename: "cat"))
-        fileCache.remove(todoId: firstItems[0].id)
+        fileCache.remove(todoId: firstItems.first?.value.id ?? "")
         XCTAssertTrue(firstItems.count > fileCache.todoItems.count)
         XCTAssertNoThrow(try fileCache.saveCsvOnDevice(filename: "cat"))
         XCTAssertNoThrow(try fileCache.loadTodoItemsFromCsv(filename: "cat"))

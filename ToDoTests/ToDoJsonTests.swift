@@ -24,7 +24,7 @@ final class ToDoJsonTests: XCTestCase {
             XCTFail()
             return
         }
-        assertTodosEqual(todo, parsedTodo)
+        XCTAssertEqual(todo, parsedTodo)
     }
     
     func testMinimumJsonReversibility() throws {
@@ -33,17 +33,7 @@ final class ToDoJsonTests: XCTestCase {
             XCTFail()
             return
         }
-        assertTodosEqual(todo, parsedTodo)
-    }
-    
-    func assertTodosEqual(_ todo1: TodoItem, _ todo2: TodoItem) {
-        XCTAssertEqual(todo1.id, todo2.id)
-        XCTAssertEqual(todo1.text, todo2.text)
-        XCTAssertEqual(todo1.importance, todo2.importance)
-        XCTAssertEqual(todo1.isComplete, todo2.isComplete)
-        XCTAssertEqual(todo1.deadline?.timeIntervalSince1970, todo2.deadline?.timeIntervalSince1970)
-        XCTAssertEqual(todo1.creationDate.timeIntervalSince1970, todo2.creationDate.timeIntervalSince1970)
-        XCTAssertEqual(todo1.modificationDate?.timeIntervalSince1970, todo2.modificationDate?.timeIntervalSince1970)
+        XCTAssertEqual(todo, parsedTodo)
     }
     
     func testGeneralJsonTranslation() throws {

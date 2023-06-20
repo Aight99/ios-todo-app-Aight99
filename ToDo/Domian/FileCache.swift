@@ -9,62 +9,56 @@ import Foundation
 
 enum FileCacheError: Error {
     case invalidPath
-    case failedWrite
-    case failedRead
     case failedSerialization
     case failedDeserialization
 }
 
 final class FileCache {
-    private(set) var todoItems = [TodoItem]()
-    
-    func add(todo: TodoItem) {
-        if let existingIndex = todoItems.firstIndex(where: {$0.id == todo.id}) {
-            todoItems[existingIndex] = todo
-            return
-        }
-        todoItems.append(todo)
+    private(set) var todoItems = [String: TodoItem]()
+
+    @discardableResult
+    func add(todo: TodoItem) -> TodoItem? {
+        let replacedTodo = todoItems[todo.id]
+        todoItems[todo.id] = todo
+        return replacedTodo
     }
-    
-    func remove(todoId: String) {
-        guard let existingIndex = todoItems.firstIndex(where: {$0.id == todoId}) else { return }
-        todoItems.remove(at: existingIndex)
+
+    @discardableResult
+    func remove(todoId: String) -> TodoItem? {
+        let removedTodo = todoItems[todoId]
+        todoItems[todoId] = nil
+        return removedTodo
     }
     
     func saveJsonOnDevice(filename: String) throws {
         guard let baseUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             throw FileCacheError.invalidPath
         }
-        let fileUrl = baseUrl.appendingPathComponent(filename)
-        
-        let todoItemsJson = todoItems.map{ $0.json }
+        let fileUrl = baseUrl.appendingPathComponent("\(filename).json")
+        let todoItemsJson = todoItems.map{ $0.value.json }
         
         guard let jsonData = try? JSONSerialization.data(withJSONObject: todoItemsJson) else {
             throw FileCacheError.failedSerialization
         }
         
-        do {
-            try jsonData.write(to: fileUrl)
-        } catch {
-            throw FileCacheError.failedWrite
-        }
+        try jsonData.write(to: fileUrl)
     }
     
     func loadTodoItemsFromJson(filename: String) throws {
         guard let baseUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             throw FileCacheError.invalidPath
         }
-        let fileUrl = baseUrl.appendingPathComponent(filename)
-        guard let jsonData = try? Data(contentsOf: fileUrl) else {
-            throw FileCacheError.failedRead
-        }
+        let fileUrl = baseUrl.appendingPathComponent("\(filename).json")
+        let jsonData = try Data(contentsOf: fileUrl)
         
         guard let parsedJsonArray = try? JSONSerialization.jsonObject(with: jsonData) as? [Any],
               let parsedTodoItems = parsedJsonArray.map({ TodoItem.parse(json: $0) }) as? [TodoItem] else {
             throw FileCacheError.failedDeserialization
         }
         
-        todoItems = parsedTodoItems
+        todoItems = parsedTodoItems.reduce(into: [:]) { res, todo in
+            res[todo.id] = todo
+        }
     }
 }
 
@@ -74,26 +68,19 @@ extension FileCache {
         guard let baseUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             throw FileCacheError.invalidPath
         }
-        let fileUrl = baseUrl.appendingPathComponent(filename)
-        
-        let todoItemsCsv = todoItems.map{ $0.csv }.joined(separator: "\n")
+        let fileUrl = baseUrl.appendingPathComponent("\(filename).json")
+        let todoItemsCsv = todoItems.map{ $0.value.csv }.joined(separator: "\n")
         let csvData = Data(todoItemsCsv.utf8)
     
-        do {
-            try csvData.write(to: fileUrl)
-        } catch {
-            throw FileCacheError.failedWrite
-        }
+        try csvData.write(to: fileUrl)
     }
     
     func loadTodoItemsFromCsv(filename: String) throws {
         guard let baseUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
             throw FileCacheError.invalidPath
         }
-        let fileUrl = baseUrl.appendingPathComponent(filename)
-        guard let csvString = try? String(contentsOf: fileUrl) else {
-            throw FileCacheError.failedRead
-        }
+        let fileUrl = baseUrl.appendingPathComponent("\(filename).json")
+        let csvString = try String(contentsOf: fileUrl)
         
         guard let parsedTodoItems = csvString
             .components(separatedBy: "\n")
@@ -101,6 +88,8 @@ extension FileCache {
             throw FileCacheError.failedDeserialization
         }
         
-        todoItems = parsedTodoItems
+        todoItems = parsedTodoItems.reduce(into: [:]) { res, todo in
+            res[todo.id] = todo
+        }
     }
 }

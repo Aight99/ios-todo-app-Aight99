@@ -35,7 +35,7 @@ final class ToDoCsvTests: XCTestCase {
         }
         assertTodosEqual(todo, parsedTodo)
     }
-    
+
     func assertTodosEqual(_ todo1: TodoItem, _ todo2: TodoItem) {
         XCTAssertEqual(todo1.id, todo2.id)
         XCTAssertEqual(todo1.text, todo2.text)

@@ -13,7 +13,7 @@ enum Importance: String {
     case unimportant
 }
 
-struct TodoItem {
+struct TodoItem: Equatable {
     let id: String
     let text: String
     let importance: Importance
@@ -84,19 +84,25 @@ extension TodoItem {
             return nil
         }
         
-        var importance: Importance = .normal
-        if let stringImportance = keyToValue[Key.importance] as? String,
-           let enumImportance = Importance(rawValue: stringImportance) {
-            importance = enumImportance
-        }
-        var deadline: Date? = nil
-        if let deadlineTimeInterval = keyToValue[Key.deadline] as? TimeInterval {
-            deadline = Date(timeIntervalSince1970: deadlineTimeInterval)
-        }
-        var modification: Date? = nil
-        if let modificationTimeInterval = keyToValue[Key.modificationDate] as? TimeInterval {
-            modification = Date(timeIntervalSince1970: modificationTimeInterval)
-        }
+        let importance: Importance = {
+            guard
+                let stringImportance = keyToValue[Key.importance] as? String,
+                let enumImportance = Importance(rawValue: stringImportance)
+            else { return .normal }
+            return enumImportance
+        }()
+        let deadline: Date? = {
+            guard
+                let deadlineTimeInterval = keyToValue[Key.deadline] as? TimeInterval
+            else { return nil}
+            return Date(timeIntervalSince1970: deadlineTimeInterval)
+        }()
+        let modification: Date? = {
+            guard
+                let modificationTimeInterval = keyToValue[Key.modificationDate] as? TimeInterval
+            else { return nil }
+            return Date(timeIntervalSince1970: modificationTimeInterval)
+        }()
     
         let creationDate = Date(timeIntervalSince1970: creationTimeInterval)
         
@@ -115,18 +121,24 @@ extension TodoItem {
 extension TodoItem {
     
     var csv: String {
-        var importanceString = ""
-        if self.importance != Importance.normal {
-            importanceString = self.importance.rawValue
-        }
-        var deadlineString = ""
-        if let deadline = self.deadline?.timeIntervalSince1970 {
-            deadlineString = String(deadline)
-        }
-        var modificationString = ""
-        if let modification = self.modificationDate?.timeIntervalSince1970 {
-            modificationString = String(modification)
-        }
+        let importanceString: String = {
+            guard
+                self.importance != Importance.normal
+            else { return "" }
+            return self.importance.rawValue
+        }()
+        let deadlineString: String = {
+            guard
+                let deadline = self.deadline?.timeIntervalSince1970
+            else { return "" }
+            return String(deadline)
+        }()
+        let modificationString: String = {
+            guard
+                let modification = self.modificationDate?.timeIntervalSince1970
+            else { return "" }
+            return String(modification)
+        }()
         let creationString = String(self.creationDate.timeIntervalSince1970)
         
         let dataArray: [String] = [
@@ -144,8 +156,8 @@ extension TodoItem {
     
     static func parse(csv: String) -> TodoItem? {
         let csvArray = csv.components(separatedBy: ";")
-        guard let creationTimeInterval = TimeInterval(csvArray[5]),
-              csvArray.count == 7,
+        guard csvArray.count == 7,
+              let creationTimeInterval = TimeInterval(csvArray[5]),
               csvArray[4] == "true" || csvArray[4] == "false" else {
             return nil
         }
@@ -155,15 +167,19 @@ extension TodoItem {
         let importance = Importance(rawValue: csvArray[2]) ?? .normal
         let isComplete = csvArray[4] == "true"
         let creation = Date(timeIntervalSince1970: creationTimeInterval)
-                
-        var deadline: Date? = nil
-        if let deadlineTimeInterval = TimeInterval(csvArray[3]) {
-            deadline = Date(timeIntervalSince1970: deadlineTimeInterval)
-        }
-        var modification: Date? = nil
-        if let modificationTimeInterval = TimeInterval(csvArray[6]) {
-            modification = Date(timeIntervalSince1970: modificationTimeInterval)
-        }
+
+        let deadline: Date? = {
+            guard
+                let deadlineTimeInterval = TimeInterval(csvArray[3])
+            else { return nil}
+            return Date(timeIntervalSince1970: deadlineTimeInterval)
+        }()
+        let modification: Date? = {
+            guard
+                let modificationTimeInterval = TimeInterval(csvArray[6])
+            else { return nil }
+            return Date(timeIntervalSince1970: modificationTimeInterval)
+        }()
         
         return TodoItem(
             id: id,
