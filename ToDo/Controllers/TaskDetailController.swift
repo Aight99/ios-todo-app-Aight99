@@ -7,9 +7,16 @@
 
 import UIKit
 
+protocol TaskDetailDelegate: AnyObject {
+    func save(todo: TodoItem)
+    func delete(id: String)
+}
+
+
 class TaskDetailController: UIViewController {
 
     let todoItem: TodoItem
+    weak var delegate: TaskDetailDelegate?
 
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
@@ -59,6 +66,7 @@ class TaskDetailController: UIViewController {
             bottom: Constants.buttonContentPadding,
             right: Constants.buttonContentPadding
         )
+        button.addTarget(self, action: #selector(deleteTodo), for: .touchUpInside)
         return button
     }()
 
@@ -118,8 +126,29 @@ class TaskDetailController: UIViewController {
             target: nil,
             action: nil
         )
+        saveItem.target = self
+        saveItem.action = #selector(saveTodo)
         navigationItem.leftBarButtonItem = cancelItem
         navigationItem.rightBarButtonItem = saveItem
+    }
+
+    @objc private func saveTodo() {
+        let newImportance = settingsView.importance
+        let newDeadline: Date? = settingsView.deadline
+        let newTodo = TodoItem(
+            id: todoItem.id,
+            text: textView.text,
+            importance: newImportance,
+            deadline: newDeadline,
+            isComplete: todoItem.isComplete,
+            creationDate: todoItem.creationDate,
+            modificationDate: Date()
+        )
+        delegate?.save(todo: newTodo)
+    }
+
+    @objc private func deleteTodo() {
+        delegate?.delete(id: todoItem.id)
     }
 
     private enum Constants {

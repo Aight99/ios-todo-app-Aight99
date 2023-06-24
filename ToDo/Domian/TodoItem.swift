@@ -21,6 +21,10 @@ struct TodoItem: Equatable {
     let isComplete: Bool
     let creationDate: Date
     let modificationDate: Date?
+
+    init() {
+        self.init(text: "Что надо сделать?", importance: .normal, isComplete: false)
+    }
     
     init(
         id: String = UUID().uuidString,

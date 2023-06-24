@@ -11,7 +11,10 @@ class TodoSettingsView: UIStackView {
 
     let todoItem: TodoItem
 
-    var viewsToHide = [UIView]()
+    private var calendarSegment = [UIView]()
+    private var segmentsView: UISegmentedControl?
+    private var deadlineLabel: UILabel?
+    private(set) var deadline: Date?
 
     private lazy var importanceView: UIView = {
         let view = UIStackView()
@@ -35,6 +38,7 @@ class TodoSettingsView: UIStackView {
             case .unimportant: return 0
             }
         }()
+        self.segmentsView = segmentsView
 
         let label = UILabel()
         label.text = "Важность"
@@ -69,15 +73,24 @@ class TodoSettingsView: UIStackView {
         label.text = "Сделать до"
         label.font = Fonts.body
         label.textColor = Colors.Label.primary
+
         let sublabel = UILabel()
-        sublabel.text = "2 июня 2021"
+        deadlineLabel = sublabel
         sublabel.font = Fonts.footnote
         sublabel.textColor = Colors.Main.blue
+        sublabel.isHidden = true
+
         labelStack.addArrangedSubview(label)
         labelStack.addArrangedSubview(sublabel)
-        viewsToHide.append(sublabel)
 
         let switchView = UISwitch()
+        if let existingDeadline = todoItem.deadline {
+            sublabel.text = formatDate(existingDeadline)
+            switchView.isOn = true
+            sublabel.isHidden = false
+        }
+        switchView.addTarget(self, action: #selector(switchDeadline(_:)), for: .valueChanged)
+
         view.addArrangedSubview(labelStack)
         view.addArrangedSubview(switchView)
         return view
@@ -87,6 +100,7 @@ class TodoSettingsView: UIStackView {
         let view = UIDatePicker()
         view.datePickerMode = .date
         view.preferredDatePickerStyle = .inline
+        view.addTarget(self, action: #selector(datePickerValueChanged(_:)), for: .valueChanged)
         return view
     }()
 
@@ -107,23 +121,64 @@ class TodoSettingsView: UIStackView {
         addArrangedSubview(deadlineView)
 
         let hiddenDivider = DividerView(height: Constants.dividerHeight)
-        viewsToHide.append(hiddenDivider)
-        viewsToHide.append(datePickerView)
+        calendarSegment.append(hiddenDivider)
+        calendarSegment.append(datePickerView)
 
         addArrangedSubview(hiddenDivider)
         addArrangedSubview(datePickerView)
 
-        toggleHiddenViews()
+        toggleCalendarViews()
     }
 
     required init(coder: NSCoder) {
         fatalError("Interface Builder is not supported")
     }
 
-    private func toggleHiddenViews() {
-        for hide in viewsToHide {
-            hide.isHidden = !hide.isHidden
+    var importance: Importance {
+        guard let segmentsView = segmentsView else {
+            return .normal
         }
+        switch segmentsView.selectedSegmentIndex {
+        case 0: return .unimportant
+        case 1: return .normal
+        case 2: return .important
+        default: return .normal
+        }
+    }
+
+    @objc func datePickerValueChanged(_ sender: UIDatePicker){
+        let date = sender.date
+        let dateString = formatDate(date)
+        deadlineLabel?.text = dateString
+        deadlineLabel?.isHidden = false
+        deadline = sender.date
+        toggleCalendarViews()
+    }
+
+    @objc private func switchDeadline(_ sender: UISwitch) {
+        if sender.isOn {
+            toggleCalendarViews()
+        } else {
+            if !calendarSegment[0].isHidden {
+                toggleCalendarViews()
+            }
+            deadlineLabel?.isHidden = true
+        }
+    }
+
+    private func toggleCalendarViews() {
+        for view in calendarSegment {
+            UIView.animate(withDuration: 0.2) {
+                view.isHidden = !view.isHidden
+            }
+        }
+    }
+
+    private func formatDate(_ date: Date) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        dateFormatter.setLocalizedDateFormatFromTemplate("dd MMMM yyyy")
+        return dateFormatter.string(from: date)
     }
 
     private enum Constants {
