@@ -21,6 +21,10 @@ struct TodoItem: Equatable {
     let isComplete: Bool
     let creationDate: Date
     let modificationDate: Date?
+
+    init() {
+        self.init(text: "Что надо сделать?", importance: .normal, isComplete: false)
+    }
     
     init(
         id: String = UUID().uuidString,
@@ -118,79 +122,3 @@ extension TodoItem {
     }
 }
 
-extension TodoItem {
-    
-    var csv: String {
-        let importanceString: String = {
-            guard
-                self.importance != Importance.normal
-            else { return "" }
-            return self.importance.rawValue
-        }()
-        let deadlineString: String = {
-            guard
-                let deadline = self.deadline?.timeIntervalSince1970
-            else { return "" }
-            return String(deadline)
-        }()
-        let modificationString: String = {
-            guard
-                let modification = self.modificationDate?.timeIntervalSince1970
-            else { return "" }
-            return String(modification)
-        }()
-        let creationString = String(self.creationDate.timeIntervalSince1970)
-        
-        let dataArray: [String] = [
-            self.id,
-            self.text,
-            importanceString,
-            deadlineString,
-            String(self.isComplete),
-            creationString,
-            modificationString
-        ]
-        
-        return dataArray.joined(separator: ";")
-    }
-    
-    static func parse(csv: String) -> TodoItem? {
-        let csvArray = csv.components(separatedBy: ";")
-        guard csvArray.count == 7,
-              let creationTimeInterval = TimeInterval(csvArray[5]),
-              csvArray[4] == "true" || csvArray[4] == "false" else {
-            return nil
-        }
-        
-        let id = csvArray[0]
-        let text = csvArray[1]
-        let importance = Importance(rawValue: csvArray[2]) ?? .normal
-        let isComplete = csvArray[4] == "true"
-        let creation = Date(timeIntervalSince1970: creationTimeInterval)
-
-        let deadline: Date? = {
-            guard
-                let deadlineTimeInterval = TimeInterval(csvArray[3])
-            else { return nil}
-            return Date(timeIntervalSince1970: deadlineTimeInterval)
-        }()
-        let modification: Date? = {
-            guard
-                let modificationTimeInterval = TimeInterval(csvArray[6])
-            else { return nil }
-            return Date(timeIntervalSince1970: modificationTimeInterval)
-        }()
-        
-        return TodoItem(
-            id: id,
-            text: text,
-            importance: importance,
-            deadline: deadline,
-            isComplete: isComplete,
-            creationDate: creation,
-            modificationDate: modification
-        )
-    }
-    
-    
-}

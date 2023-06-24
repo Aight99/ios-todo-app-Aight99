@@ -62,34 +62,3 @@ final class FileCache {
     }
 }
 
-extension FileCache {
-    
-    func saveCsvOnDevice(filename: String) throws {
-        guard let baseUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-            throw FileCacheError.invalidPath
-        }
-        let fileUrl = baseUrl.appendingPathComponent("\(filename).json")
-        let todoItemsCsv = todoItems.map{ $0.value.csv }.joined(separator: "\n")
-        let csvData = Data(todoItemsCsv.utf8)
-    
-        try csvData.write(to: fileUrl)
-    }
-    
-    func loadTodoItemsFromCsv(filename: String) throws {
-        guard let baseUrl = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first else {
-            throw FileCacheError.invalidPath
-        }
-        let fileUrl = baseUrl.appendingPathComponent("\(filename).json")
-        let csvString = try String(contentsOf: fileUrl)
-        
-        guard let parsedTodoItems = csvString
-            .components(separatedBy: "\n")
-            .map({ TodoItem.parse(csv: $0) }) as? [TodoItem] else {
-            throw FileCacheError.failedDeserialization
-        }
-        
-        todoItems = parsedTodoItems.reduce(into: [:]) { res, todo in
-            res[todo.id] = todo
-        }
-    }
-}
