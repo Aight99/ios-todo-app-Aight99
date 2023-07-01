@@ -14,7 +14,12 @@ enum FileCacheError: Error {
 }
 
 final class FileCache {
+
     private(set) var todoItems = [String: TodoItem]()
+
+    var sortedItems: [TodoItem] {
+        return todoItems.sorted{ $0.value.creationDate > $1.value.creationDate }.map{ $0.value }
+    }
 
     @discardableResult
     func add(todo: TodoItem) -> TodoItem? {

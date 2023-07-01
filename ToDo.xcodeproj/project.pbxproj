@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B62BCD0C2A4F8C9F009F009E /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62BCD0B2A4F8C9F009F009E /* TaskTableViewCell.swift */; };
 		B63199D02A46360200A54571 /* TodoSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63199CF2A46360200A54571 /* TodoSettingsView.swift */; };
 		B63199D22A465A3A00A54571 /* DividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63199D12A465A3A00A54571 /* DividerView.swift */; };
 		B65D96762A3CFD3900C489A3 /* FileCacheTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B65D96752A3CFD3900C489A3 /* FileCacheTests.swift */; };
@@ -21,6 +22,7 @@
 		B67CA31A2A3A15D700FCEC8E /* ToDoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67CA3192A3A15D700FCEC8E /* ToDoUITests.swift */; };
 		B67CA31C2A3A15D700FCEC8E /* ToDoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67CA31B2A3A15D700FCEC8E /* ToDoUITestsLaunchTests.swift */; };
 		B6BC7CE02A44B0E600E50B18 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BC7CDF2A44B0E600E50B18 /* Assets.swift */; };
+		B6F780662A4F238100365987 /* TaskTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F780652A4F238100365987 /* TaskTableController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B62BCD0B2A4F8C9F009F009E /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		B63199CF2A46360200A54571 /* TodoSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoSettingsView.swift; sourceTree = "<group>"; };
 		B63199D12A465A3A00A54571 /* DividerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividerView.swift; sourceTree = "<group>"; };
 		B65D96752A3CFD3900C489A3 /* FileCacheTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileCacheTests.swift; sourceTree = "<group>"; };
@@ -59,6 +62,7 @@
 		B67CA3192A3A15D700FCEC8E /* ToDoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoUITests.swift; sourceTree = "<group>"; };
 		B67CA31B2A3A15D700FCEC8E /* ToDoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B6BC7CDF2A44B0E600E50B18 /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
+		B6F780652A4F238100365987 /* TaskTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,6 +95,7 @@
 			children = (
 				B63199CF2A46360200A54571 /* TodoSettingsView.swift */,
 				B63199D12A465A3A00A54571 /* DividerView.swift */,
+				B62BCD0B2A4F8C9F009F009E /* TaskTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -162,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				B67CA2FC2A3A15D400FCEC8E /* TaskDetailController.swift */,
+				B6F780652A4F238100365987 /* TaskTableController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -298,9 +304,11 @@
 			files = (
 				B63199D02A46360200A54571 /* TodoSettingsView.swift in Sources */,
 				B67CA2FD2A3A15D400FCEC8E /* TaskDetailController.swift in Sources */,
+				B62BCD0C2A4F8C9F009F009E /* TaskTableViewCell.swift in Sources */,
 				B67CA2F92A3A15D400FCEC8E /* AppDelegate.swift in Sources */,
 				B6BC7CE02A44B0E600E50B18 /* Assets.swift in Sources */,
 				B666F8AD2A3B781E00FB9051 /* TodoItem.swift in Sources */,
+				B6F780662A4F238100365987 /* TaskTableController.swift in Sources */,
 				B666F8AF2A3B785800FB9051 /* FileCache.swift in Sources */,
 				B63199D22A465A3A00A54571 /* DividerView.swift in Sources */,
 				B67CA2FB2A3A15D400FCEC8E /* SceneDelegate.swift in Sources */,

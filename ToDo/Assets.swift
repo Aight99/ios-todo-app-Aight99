@@ -85,4 +85,13 @@ enum Colors {
     }
 }
 
+enum SfSymbolNames {
+    static let circle = "circlebadge"
+    static let circleChecked = "checkmark.circle.fill"
+    static let calendar = "calendar"
+    static let trash = "trash.fill"
+    static let chevronForward = "chevron.forward"
+    static let plus = "plus"
+
+}
 
