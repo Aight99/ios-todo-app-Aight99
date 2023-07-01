@@ -46,6 +46,20 @@ struct TodoItem: Equatable {
 }
 
 extension TodoItem {
+    var oppositeCompletion: TodoItem {
+        return TodoItem(
+            id: id,
+            text: text,
+            importance: importance,
+            deadline: deadline,
+            isComplete: !isComplete,
+            creationDate: creationDate,
+            modificationDate: modificationDate
+        )
+    }
+}
+
+extension TodoItem {
     
     private enum Key {
         static let id = "id"

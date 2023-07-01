@@ -85,7 +85,7 @@ class TodoSettingsView: UIStackView {
 
         let switchView = UISwitch()
         if let existingDeadline = todoItem.deadline {
-            sublabel.text = formatDate(existingDeadline)
+            sublabel.text = existingDeadline.deadlineFormat
             switchView.isOn = true
             sublabel.isHidden = false
         }
@@ -148,7 +148,7 @@ class TodoSettingsView: UIStackView {
 
     @objc func datePickerValueChanged(_ sender: UIDatePicker){
         let date = sender.date
-        let dateString = formatDate(date)
+        let dateString = date.deadlineFormat
         deadlineLabel?.text = dateString
         deadlineLabel?.isHidden = false
         deadline = sender.date
@@ -174,13 +174,6 @@ class TodoSettingsView: UIStackView {
         }
     }
 
-    private func formatDate(_ date: Date) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "ru_RU")
-        dateFormatter.setLocalizedDateFormatFromTemplate("dd MMMM yyyy")
-        return dateFormatter.string(from: date)
-    }
-
     private enum Constants {
         static let dividerHeight: CGFloat = 0.5
         static let segmentsHeight: CGFloat = 36
@@ -188,4 +181,13 @@ class TodoSettingsView: UIStackView {
         static let horizontalPadding: CGFloat = 16
     }
     
+}
+
+extension Date {
+    var deadlineFormat: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+        dateFormatter.setLocalizedDateFormatFromTemplate("dd MMMM yyyy")
+        return dateFormatter.string(from: self)
+    }
 }

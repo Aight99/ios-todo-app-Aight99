@@ -128,6 +128,8 @@ class TaskDetailController: UIViewController {
         )
         saveItem.target = self
         saveItem.action = #selector(saveTodo)
+        cancelItem.target = self
+        cancelItem.action = #selector(closeModal)
         navigationItem.leftBarButtonItem = cancelItem
         navigationItem.rightBarButtonItem = saveItem
     }
@@ -145,6 +147,11 @@ class TaskDetailController: UIViewController {
             modificationDate: Date()
         )
         delegate?.save(todo: newTodo)
+        closeModal()
+    }
+
+    @objc private func closeModal() {
+        presentingViewController?.dismiss(animated: true, completion: nil)
     }
 
     @objc private func deleteTodo() {
