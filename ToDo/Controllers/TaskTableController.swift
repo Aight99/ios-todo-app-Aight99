@@ -102,14 +102,12 @@ class TaskTableController: UIViewController {
 extension TaskTableController: TaskDetailDelegate {
     func save(todo: TodoItem) {
         fileCache.add(todo: todo)
-        Logger.sharedInstance.logInfo("Trying to add todo with id \(todo.id)")
         try? fileCache.saveJsonOnDevice(filename: fileName)
         taskTable.reloadData()
     }
 
     func delete(id: String) {
         fileCache.remove(todoId: id)
-        Logger.sharedInstance.logInfo("Trying to remove todo with id \(id)")
         try? fileCache.saveJsonOnDevice(filename: fileName)
         taskTable.reloadData()
     }
