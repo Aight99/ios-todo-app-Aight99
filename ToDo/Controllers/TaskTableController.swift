@@ -91,24 +91,24 @@ class TaskTableController: UIViewController {
 
     private func loadTodoItems() {
         do {
-            try fileCache.loadTodoItemsFromJson(filename: fileName)
+            try fileCache.loadFromSql()
         } catch {
             fileCache.add(todo: TodoItem())
         }
     }
 }
 
-// TODO: Update current table view content
+
 extension TaskTableController: TaskDetailDelegate {
     func save(todo: TodoItem) {
         fileCache.add(todo: todo)
-        try? fileCache.saveJsonOnDevice(filename: fileName)
+        try? fileCache.saveInSql()
         taskTable.reloadData()
     }
 
     func delete(id: String) {
+        try? fileCache.deleteInSql(todoId: id)
         fileCache.remove(todoId: id)
-        try? fileCache.saveJsonOnDevice(filename: fileName)
         taskTable.reloadData()
     }
 }

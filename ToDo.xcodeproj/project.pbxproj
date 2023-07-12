@@ -23,6 +23,9 @@
 		B67CA31A2A3A15D700FCEC8E /* ToDoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67CA3192A3A15D700FCEC8E /* ToDoUITests.swift */; };
 		B67CA31C2A3A15D700FCEC8E /* ToDoUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B67CA31B2A3A15D700FCEC8E /* ToDoUITestsLaunchTests.swift */; };
 		B6BC7CE02A44B0E600E50B18 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6BC7CDF2A44B0E600E50B18 /* Assets.swift */; };
+		B6EE02CF2A5F28FE005EFB9C /* SQLite in Frameworks */ = {isa = PBXBuildFile; productRef = B6EE02CE2A5F28FE005EFB9C /* SQLite */; };
+		B6EE02D12A5F442C005EFB9C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EE02D02A5F442C005EFB9C /* Extensions.swift */; };
+		B6EE02D42A5F4562005EFB9C /* TodoItemSqlQueries.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6EE02D32A5F4562005EFB9C /* TodoItemSqlQueries.swift */; };
 		B6F780662A4F238100365987 /* TaskTableController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B6F780652A4F238100365987 /* TaskTableController.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,6 +67,8 @@
 		B67CA3192A3A15D700FCEC8E /* ToDoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoUITests.swift; sourceTree = "<group>"; };
 		B67CA31B2A3A15D700FCEC8E /* ToDoUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		B6BC7CDF2A44B0E600E50B18 /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
+		B6EE02D02A5F442C005EFB9C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		B6EE02D32A5F4562005EFB9C /* TodoItemSqlQueries.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoItemSqlQueries.swift; sourceTree = "<group>"; };
 		B6F780652A4F238100365987 /* TaskTableController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -72,6 +77,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B6EE02CF2A5F28FE005EFB9C /* SQLite in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -142,6 +148,7 @@
 		B67CA2F72A3A15D400FCEC8E /* ToDo */ = {
 			isa = PBXGroup;
 			children = (
+				B6EE02D22A5F4529005EFB9C /* Persistence */,
 				B677B2512A58993C000F1CBD /* Network */,
 				B63199CE2A4635AD00A54571 /* Views */,
 				B6BC7CDD2A436C7200E50B18 /* Controllers */,
@@ -152,6 +159,7 @@
 				B67CA3032A3A15D700FCEC8E /* LaunchScreen.storyboard */,
 				B67CA3062A3A15D700FCEC8E /* Info.plist */,
 				B6BC7CDF2A44B0E600E50B18 /* Assets.swift */,
+				B6EE02D02A5F442C005EFB9C /* Extensions.swift */,
 			);
 			path = ToDo;
 			sourceTree = "<group>";
@@ -183,6 +191,14 @@
 			path = Controllers;
 			sourceTree = "<group>";
 		};
+		B6EE02D22A5F4529005EFB9C /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+				B6EE02D32A5F4562005EFB9C /* TodoItemSqlQueries.swift */,
+			);
+			path = Persistence;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -199,6 +215,9 @@
 			dependencies = (
 			);
 			name = ToDo;
+			packageProductDependencies = (
+				B6EE02CE2A5F28FE005EFB9C /* SQLite */,
+			);
 			productName = ToDo;
 			productReference = B67CA2F52A3A15D400FCEC8E /* ToDo.app */;
 			productType = "com.apple.product-type.application";
@@ -271,6 +290,9 @@
 				Base,
 			);
 			mainGroup = B67CA2EC2A3A15D400FCEC8E;
+			packageReferences = (
+				B6EE02CD2A5F28FE005EFB9C /* XCRemoteSwiftPackageReference "SQLite" */,
+			);
 			productRefGroup = B67CA2F62A3A15D400FCEC8E /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -315,11 +337,13 @@
 			files = (
 				B63199D02A46360200A54571 /* TodoSettingsView.swift in Sources */,
 				B67CA2FD2A3A15D400FCEC8E /* TaskDetailController.swift in Sources */,
+				B6EE02D42A5F4562005EFB9C /* TodoItemSqlQueries.swift in Sources */,
 				B677B2532A589A37000F1CBD /* URLSession.swift in Sources */,
 				B62BCD0C2A4F8C9F009F009E /* TaskTableViewCell.swift in Sources */,
 				B67CA2F92A3A15D400FCEC8E /* AppDelegate.swift in Sources */,
 				B6BC7CE02A44B0E600E50B18 /* Assets.swift in Sources */,
 				B666F8AD2A3B781E00FB9051 /* TodoItem.swift in Sources */,
+				B6EE02D12A5F442C005EFB9C /* Extensions.swift in Sources */,
 				B6F780662A4F238100365987 /* TaskTableController.swift in Sources */,
 				B666F8AF2A3B785800FB9051 /* FileCache.swift in Sources */,
 				B63199D22A465A3A00A54571 /* DividerView.swift in Sources */,
@@ -509,7 +533,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.idontknow.ToDo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_STRICT_CONCURRENCY = minimal;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -538,7 +562,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.idontknow.ToDo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_STRICT_CONCURRENCY = complete;
+				SWIFT_STRICT_CONCURRENCY = minimal;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -660,6 +684,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		B6EE02CD2A5F28FE005EFB9C /* XCRemoteSwiftPackageReference "SQLite" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/stephencelis/SQLite.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.9.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		B6EE02CE2A5F28FE005EFB9C /* SQLite */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = B6EE02CD2A5F28FE005EFB9C /* XCRemoteSwiftPackageReference "SQLite" */;
+			productName = SQLite;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = B67CA2ED2A3A15D400FCEC8E /* Project object */;
 }
