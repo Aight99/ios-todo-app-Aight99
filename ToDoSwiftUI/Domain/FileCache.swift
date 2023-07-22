@@ -14,6 +14,9 @@ final class FileCache {
     var sortedItems: [TodoItem] {
         return todoItems.sorted { $0.value.creationDate > $1.value.creationDate }.map { $0.value }
     }
+    var completedCount: Int {
+        return todoItems.filter { $0.value.isComplete }.count
+    }
 
     @discardableResult
     func add(todo: TodoItem) -> TodoItem? {
@@ -34,7 +37,7 @@ extension FileCache {
     static func getDummyTodos() -> [String: TodoItem] {
         let todoList = [
             TodoItem(text: "Купить ананас", importance: .important, isComplete: true),
-            TodoItem(text: "Купить мельницу", importance: .unimportant, isComplete: false),
+            TodoItem(text: "Купить мельницу", importance: .unimportant, deadline: .now, isComplete: false),
             TodoItem(text: "Раскатать тесто", importance: .important, isComplete: false),
             TodoItem(text: "Испечь пиццку", importance: .normal, isComplete: false),
         ]

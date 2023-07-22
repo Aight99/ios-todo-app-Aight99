@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B618E3942A6B40CC00C2C61A /* TaskTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B618E3932A6B40CC00C2C61A /* TaskTableView.swift */; };
+		B618E3962A6B411E00C2C61A /* TaskCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B618E3952A6B411D00C2C61A /* TaskCellView.swift */; };
 		B62BCD0C2A4F8C9F009F009E /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B62BCD0B2A4F8C9F009F009E /* TaskTableViewCell.swift */; };
 		B63199D02A46360200A54571 /* TodoSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63199CF2A46360200A54571 /* TodoSettingsView.swift */; };
 		B63199D22A465A3A00A54571 /* DividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63199D12A465A3A00A54571 /* DividerView.swift */; };
@@ -57,6 +59,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B618E3932A6B40CC00C2C61A /* TaskTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableView.swift; sourceTree = "<group>"; };
+		B618E3952A6B411D00C2C61A /* TaskCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskCellView.swift; sourceTree = "<group>"; };
 		B62BCD0B2A4F8C9F009F009E /* TaskTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 		B63199CF2A46360200A54571 /* TodoSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoSettingsView.swift; sourceTree = "<group>"; };
 		B63199D12A465A3A00A54571 /* DividerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividerView.swift; sourceTree = "<group>"; };
@@ -274,6 +278,8 @@
 		B6C910152A6B0F9600B0E79E /* Table */ = {
 			isa = PBXGroup;
 			children = (
+				B618E3932A6B40CC00C2C61A /* TaskTableView.swift */,
+				B618E3952A6B411D00C2C61A /* TaskCellView.swift */,
 			);
 			path = Table;
 			sourceTree = "<group>";
@@ -458,8 +464,10 @@
 				B6C910132A6B040D00B0E79E /* Assets.swift in Sources */,
 				B6C9100C2A6AE2E500B0E79E /* FileCache.swift in Sources */,
 				B64B0FF12A6ADDD700C71B1C /* ToDoSwiftUIApp.swift in Sources */,
+				B618E3942A6B40CC00C2C61A /* TaskTableView.swift in Sources */,
 				B6C9100E2A6AF27D00B0E79E /* TaskDetailView.swift in Sources */,
 				B6C910192A6B20EF00B0E79E /* Utils.swift in Sources */,
+				B618E3962A6B411E00C2C61A /* TaskCellView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,48 +10,70 @@ import SwiftUI
 struct TaskDetailView: View {
 
     @State private var taskText = ""
+    let todo: TodoItem
+
+    init(todo: TodoItem) {
+        self.todo = todo
+    }
 
     var body: some View {
-        VStack {
-//            ZStack(alignment: .leading) {
-//                TextEditor(text: $taskText)
-//                if taskText.isEmpty {
-//                    Text("Что нужно сделать?")
-//                        .opacity(0.4)
-//                        .padding()
-//                }
-//            }
-//            .frame(minHeight: 120)
-            TextField("Что нужно сделать?", text: $taskText, axis: .vertical)
-                .padding()
-                .lineLimit(10)
-                .background(Color(ColorNames.Back.secondary))
-                .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
-
-            SettingsView()
-                .background(Color(ColorNames.Back.secondary))
-                .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
-            Button(action: deleteTask) {
-                Text("Удалить")
-                    .frame(maxWidth: .infinity, minHeight: 56, maxHeight: 56)
-                    .foregroundColor(Color(ColorNames.Main.red))
+        NavigationView {
+            VStack {
+                TextField("Что нужно сделать?", text: $taskText, axis: .vertical)
+                    .padding()
+                    .lineLimit(10)
                     .background(Color(ColorNames.Back.secondary))
                     .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
+
+                SettingsView(todo: todo)
+                    .background(Color(ColorNames.Back.secondary))
+                    .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
+                Button(action: deleteTask) {
+                    Text("Удалить")
+                        .frame(maxWidth: .infinity, minHeight: 56, maxHeight: 56)
+                        .foregroundColor(Color(ColorNames.Main.red))
+                        .background(Color(ColorNames.Back.secondary))
+                        .clipShape(RoundedRectangle(cornerRadius: Constants.cornerRadius))
+                }
+                Spacer()
             }
-            Spacer()
+            .padding()
+            .background(Color(ColorNames.Back.primary))
+            .navigationBarTitle("Дело")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationBarItems(
+                leading:
+                    Button(action: {
+                        print("Галя, отмена")
+                    }) {
+                        Text("Отменить")
+                    },
+                trailing:
+                    Button(action: {
+                        print("Сохранено")
+                    }) {
+                        Text("Сохранить")
+                            .fontWeight(.semibold)
+                    }
+            )
+            .onAppear() {
+                setup()
+            }
         }
-        .padding()
-        .background(Color(ColorNames.Back.primary))
     }
 
     func deleteTask() {
         print("Удолено")
     }
+
+    private func setup() {
+        self.taskText = todo.text
+    }
 }
 
 struct TaskDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        TaskDetailView()
+        TaskDetailView(todo: TodoItem())
     }
 }
 

@@ -13,7 +13,7 @@ enum Importance: String {
     case unimportant
 }
 
-struct TodoItem: Equatable {
+struct TodoItem: Identifiable {
     let id: String
     let text: String
     let importance: Importance
@@ -23,7 +23,7 @@ struct TodoItem: Equatable {
     let modificationDate: Date?
 
     init() {
-        self.init(text: "Что надо сделать?", importance: .normal, isComplete: false)
+        self.init(text: "", importance: .normal, isComplete: false)
     }
 
     init(

@@ -7,13 +7,18 @@
 
 import SwiftUI
 
-let importanceList = ["💤", "нет", "‼️"]
-
 struct SettingsView: View {
     @State private var isCalendarHidden = true
-    @State private var isDeadlineEnabled = false
-    @State private var selectedDeadline = Date.tomorrow
-    @State private var selectedImportance = importanceList[1]
+    @State private var isDeadlineEnabled: Bool = false
+    @State private var selectedDeadline: Date = Date.tomorrow
+    @State private var selectedImportance: String = ""
+    let importanceList = ["💤", "нет", "‼️"]
+
+    let todo: TodoItem
+
+    init(todo: TodoItem) {
+        self.todo = todo
+    }
 
     var body: some View {
         VStack {
@@ -78,13 +83,30 @@ struct SettingsView: View {
             }
         }
         .frame(maxWidth: .infinity)
+        .onAppear() {
+            setup()
+        }
 
+    }
+
+    private func setup() {
+        selectedImportance = {
+            switch todo.importance {
+            case .unimportant: return importanceList[0]
+            case .normal: return importanceList[1]
+            case .important: return importanceList[2]
+            }
+        }()
+        if let deadline = todo.deadline {
+            selectedDeadline = deadline
+            isDeadlineEnabled = true
+        }
     }
 }
 
 struct SettingsView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingsView()
+        SettingsView(todo: TodoItem())
             .background(Color(ColorNames.Back.secondary))
             .padding()
             .shadow(radius: 10)
