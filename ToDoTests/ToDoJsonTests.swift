@@ -21,7 +21,7 @@ final class ToDoJsonTests: XCTestCase {
             modificationDate: Date(timeIntervalSince1970: 3)
         )
         guard let parsedTodo = TodoItem.parse(json: todo.json) else {
-            XCTFail()
+            XCTFail("Parsing failed")
             return
         }
         XCTAssertEqual(todo, parsedTodo)
@@ -30,7 +30,7 @@ final class ToDoJsonTests: XCTestCase {
     func testMinimumJsonReversibility() throws {
         let todo = TodoItem(text: "🤡", importance: .normal, isComplete: false)
         guard let parsedTodo = TodoItem.parse(json: todo.json) else {
-            XCTFail()
+            XCTFail("Parsing failed")
             return
         }
         XCTAssertEqual(todo, parsedTodo)
@@ -56,7 +56,7 @@ final class ToDoJsonTests: XCTestCase {
         ).json
         
         guard let todoJson = todoJson as? [String: Any] else {
-            XCTFail()
+            XCTFail("Serialization failed")
             return
         }
         XCTAssertEqual(todoJson.count, 7)
@@ -73,7 +73,7 @@ final class ToDoJsonTests: XCTestCase {
         let todoJson = TodoItem(text: "", importance: .normal, isComplete: true).json
         
         guard let todoJson = todoJson as? [String: Any] else {
-            XCTFail()
+            XCTFail("Serialization failed")
             return
         }
         XCTAssertEqual(todoJson.count, 4)
@@ -106,7 +106,7 @@ final class ToDoJsonTests: XCTestCase {
         ]
         
         guard let todo = TodoItem.parse(json: json) else {
-            XCTFail("JSON parsing fail")
+            XCTFail("Parsing failed")
             return
         }
         
@@ -133,7 +133,7 @@ final class ToDoJsonTests: XCTestCase {
         ]
         
         guard let todo = TodoItem.parse(json: json) else {
-            XCTFail("JSON parsing fail")
+            XCTFail("Parsing failed")
             return
         }
         

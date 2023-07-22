@@ -45,7 +45,7 @@ enum Fonts {
             string: text,
             attributes: [
                 .paragraphStyle: paragraphStyle,
-                .font: font,
+                .font: font
             ]
         )
         return string
@@ -94,4 +94,3 @@ enum SfSymbolNames {
     static let plus = "plus"
 
 }
-

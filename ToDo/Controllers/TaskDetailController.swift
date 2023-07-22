@@ -12,7 +12,6 @@ protocol TaskDetailDelegate: AnyObject {
     func delete(id: String)
 }
 
-
 class TaskDetailController: UIViewController {
 
     let todoItem: TodoItem
@@ -108,7 +107,7 @@ class TaskDetailController: UIViewController {
             stackView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor),
             stackView.bottomAnchor.constraint(equalTo: scrollView.contentLayoutGuide.bottomAnchor),
             stackView.leadingAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.trailingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: scrollView.safeAreaLayoutGuide.trailingAnchor)
         ])
     }
 
@@ -166,4 +165,3 @@ class TaskDetailController: UIViewController {
         static let buttonContentPadding: CGFloat = 16
     }
 }
-

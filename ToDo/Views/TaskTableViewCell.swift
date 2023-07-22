@@ -70,7 +70,6 @@ class TaskTableViewCell: UITableViewCell {
         return view
     }()
 
-
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addSubview(checkedCircleView)
@@ -148,7 +147,7 @@ class TaskTableViewCell: UITableViewCell {
             importantCircleView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.horizontalPadding),
             importantCircleView.widthAnchor.constraint(equalToConstant: Constants.circleDiameter),
             importantCircleView.heightAnchor.constraint(equalToConstant: Constants.circleDiameter),
-            
+
             titleStackView.topAnchor.constraint(equalTo: topAnchor, constant: Constants.verticalPadding),
             titleStackView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -Constants.verticalPadding),
             titleStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: Constants.horizontalPadding + Constants.circleDiameter + Constants.itemsSpacing),
@@ -157,7 +156,7 @@ class TaskTableViewCell: UITableViewCell {
             arrowView.centerYAnchor.constraint(equalTo: centerYAnchor),
             arrowView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -Constants.horizontalPadding),
             arrowView.widthAnchor.constraint(equalToConstant: Constants.arrowWidth),
-            arrowView.heightAnchor.constraint(equalToConstant: Constants.arrowHeight),
+            arrowView.heightAnchor.constraint(equalToConstant: Constants.arrowHeight)
 
         ])
     }

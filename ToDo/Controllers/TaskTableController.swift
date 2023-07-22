@@ -61,7 +61,7 @@ class TaskTableController: UIViewController {
             addButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             addButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
             addButton.heightAnchor.constraint(equalToConstant: 44),
-            addButton.widthAnchor.constraint(equalToConstant: 44),
+            addButton.widthAnchor.constraint(equalToConstant: 44)
         ])
     }
 
@@ -72,7 +72,7 @@ class TaskTableController: UIViewController {
         paragraphStyle.firstLineHeadIndent = 16
         let largeTitleAttributes: [NSAttributedString.Key: Any] = [
             .font: Fonts.largeTitle,
-            .paragraphStyle: paragraphStyle,
+            .paragraphStyle: paragraphStyle
         ]
         navigationController?.navigationBar.largeTitleTextAttributes = largeTitleAttributes
     }
@@ -97,7 +97,6 @@ class TaskTableController: UIViewController {
         }
     }
 }
-
 
 extension TaskTableController: TaskDetailDelegate {
     func save(todo: TodoItem) {
@@ -145,8 +144,7 @@ extension TaskTableController: UITableViewDelegate {
             return nil
         }
 
-        let deleteAction = UIContextualAction(style: .destructive, title:  "", handler: {
-            [weak self] (action, view, completionHandler) in
+        let deleteAction = UIContextualAction(style: .destructive, title:  "", handler: { [weak self] (action, view, completionHandler) in
             guard let self = self else { return }
             self.delete(id: cell.todoId)
         })
@@ -162,8 +160,7 @@ extension TaskTableController: UITableViewDelegate {
             return nil
         }
 
-        let doneAction = UIContextualAction(style: .normal, title:  "", handler: {
-            [weak self] (action, view, completionHandler) in
+        let doneAction = UIContextualAction(style: .normal, title:  "", handler: { [weak self] (action, view, completionHandler) in
             guard let self = self, let todo = self.fileCache.todoItems[cell.todoId] else { return }
             self.save(todo: todo.oppositeCompletion)
         })

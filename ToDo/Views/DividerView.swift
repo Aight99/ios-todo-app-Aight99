@@ -18,7 +18,7 @@ class DividerView: UIView {
 
         translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            heightAnchor.constraint(equalToConstant: height),
+            heightAnchor.constraint(equalToConstant: height)
         ])
     }
 

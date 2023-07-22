@@ -25,7 +25,7 @@ struct TodoItem: Equatable {
     init() {
         self.init(text: "Что надо сделать?", importance: .normal, isComplete: false)
     }
-    
+
     init(
         id: String = UUID().uuidString,
         text: String,
@@ -60,7 +60,7 @@ extension TodoItem {
 }
 
 extension TodoItem {
-    
+
     private enum Key {
         static let id = "id"
         static let text = "text"
@@ -73,12 +73,12 @@ extension TodoItem {
 
     var json: Any {
         var jsonDictionary = [String: Any]()
-        
+
         jsonDictionary[Key.id] = self.id
         jsonDictionary[Key.text] = self.text
         jsonDictionary[Key.isComplete] = self.isComplete
         jsonDictionary[Key.creationDate] = self.creationDate.timeIntervalSince1970
-        
+
         if self.importance != Importance.normal {
             jsonDictionary[Key.importance] = self.importance.rawValue
         }
@@ -88,10 +88,10 @@ extension TodoItem {
         if let modification = self.modificationDate?.timeIntervalSince1970 {
             jsonDictionary[Key.modificationDate] = modification
         }
-        
+
         return jsonDictionary
     }
-    
+
     static func parse(json: Any) -> TodoItem? {
         guard let keyToValue = json as? [String: Any],
               let id = keyToValue[Key.id] as? String,
@@ -101,7 +101,7 @@ extension TodoItem {
         else {
             return nil
         }
-        
+
         let importance: Importance = {
             guard
                 let stringImportance = keyToValue[Key.importance] as? String,
@@ -121,9 +121,9 @@ extension TodoItem {
             else { return nil }
             return Date(timeIntervalSince1970: modificationTimeInterval)
         }()
-    
+
         let creationDate = Date(timeIntervalSince1970: creationTimeInterval)
-        
+
         return TodoItem(
             id: id,
             text: text,
@@ -135,4 +135,3 @@ extension TodoItem {
         )
     }
 }
-

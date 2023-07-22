@@ -30,7 +30,7 @@ final class FileCache {
     }
 
     var sortedItems: [TodoItem] {
-        return todoItems.sorted{ $0.value.creationDate > $1.value.creationDate }.map{ $0.value }
+        return todoItems.sorted { $0.value.creationDate > $1.value.creationDate }.map { $0.value }
     }
 
     @discardableResult
@@ -51,37 +51,37 @@ final class FileCache {
 extension FileCache {
 
     func saveInSql() throws {
-        let db = try getDbConnection()
+        let database = try getDbConnection()
         for item in todoItems.values {
             let query = item.sqlReplaceStatement
-            try db.run(query)
+            try database.run(query)
         }
     }
 
     func insertInSql(todo: TodoItem) throws {
-        let db = try getDbConnection()
+        let database = try getDbConnection()
         let query = todo.sqlInsertStatement
-        try db.run(query)
+        try database.run(query)
     }
 
     func updateInSql(todo: TodoItem) throws {
-        let db = try getDbConnection()
+        let database = try getDbConnection()
         let query = todo.sqlDeleteStatement
-        try db.run(query)
+        try database.run(query)
     }
 
     func deleteInSql(todoId: String) throws {
-        let db = try getDbConnection()
+        let database = try getDbConnection()
         guard let todo = todoItems[todoId] else {
             return
         }
         let query = todo.sqlDeleteStatement
-        try db.run(query)
+        try database.run(query)
     }
 
     func loadFromSql() throws {
         var items = [String: TodoItem]()
-        let db = try getDbConnection()
+        let database = try getDbConnection()
         let table = Table(SqlTableKeys.tableName)
         let query = table.select(*)
 
@@ -93,15 +93,15 @@ extension FileCache {
         let creationDate = Expression<Double>(SqlTableKeys.creationDate)
         let modificationDate = Expression<Double?>(SqlTableKeys.modificationDate)
 
-        for row in try db.prepare(query) {
+        for row in try database.prepare(query) {
             let item = TodoItem(
                 id: row[id],
                 text: row[text],
                 importance: Importance(rawValue: row[importance])!,
-                deadline: row[deadline].flatMap{ Date(timeIntervalSince1970: $0) },
+                deadline: row[deadline].flatMap { Date(timeIntervalSince1970: $0) },
                 isComplete: row[isComplete],
                 creationDate: Date(timeIntervalSince1970: row[creationDate]),
-                modificationDate: row[modificationDate].flatMap{ Date(timeIntervalSince1970: $0) }
+                modificationDate: row[modificationDate].flatMap { Date(timeIntervalSince1970: $0) }
             )
             items[item.id] = item
         }
@@ -110,7 +110,7 @@ extension FileCache {
 
     private func createSqlTable() throws {
 
-        let db = try getDbConnection()
+        let database = try getDbConnection()
 
         let table = Table(SqlTableKeys.tableName)
         let id = Expression<String>(SqlTableKeys.id)
@@ -121,14 +121,14 @@ extension FileCache {
         let creationDate = Expression<Double>(SqlTableKeys.creationDate)
         let modificationDate = Expression<Double?>(SqlTableKeys.modificationDate)
 
-        try db.run(table.create(ifNotExists: true) { t in
-            t.column(id, primaryKey: true)
-            t.column(text)
-            t.column(importance)
-            t.column(deadline)
-            t.column(isComplete)
-            t.column(creationDate)
-            t.column(modificationDate)
+        try database.run(table.create(ifNotExists: true) { table in
+            table.column(id, primaryKey: true)
+            table.column(text)
+            table.column(importance)
+            table.column(deadline)
+            table.column(isComplete)
+            table.column(creationDate)
+            table.column(modificationDate)
         })
     }
 
@@ -172,7 +172,7 @@ extension FileCache {
             throw FileCacheError.invalidPath
         }
         let fileUrl = baseUrl.appendingPathComponent("\(filename).json")
-        let todoItemsJson = todoItems.map{ $0.value.json }
+        let todoItemsJson = todoItems.map { $0.value.json }
 
         guard let jsonData = try? JSONSerialization.data(withJSONObject: todoItemsJson) else {
             throw FileCacheError.failedSerialization

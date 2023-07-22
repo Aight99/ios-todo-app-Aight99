@@ -29,7 +29,7 @@ class TodoSettingsView: UIStackView {
         )
 
         let segmentsView = UISegmentedControl(items: [
-            "💤", "нет", "‼️",
+            "💤", "нет", "‼️"
         ])
         segmentsView.selectedSegmentIndex = {
             switch todoItem.importance {
@@ -49,7 +49,7 @@ class TodoSettingsView: UIStackView {
         view.addArrangedSubview(segmentsView)
         segmentsView.translatesAutoresizingMaskIntoConstraints = false
         NSLayoutConstraint.activate([
-            segmentsView.heightAnchor.constraint(equalToConstant: Constants.segmentsHeight),
+            segmentsView.heightAnchor.constraint(equalToConstant: Constants.segmentsHeight)
         ])
         return view
     }()
@@ -146,7 +146,7 @@ class TodoSettingsView: UIStackView {
         }
     }
 
-    @objc func datePickerValueChanged(_ sender: UIDatePicker){
+    @objc func datePickerValueChanged(_ sender: UIDatePicker) {
         let date = sender.date
         let dateString = date.deadlineFormat
         deadlineLabel?.text = dateString
@@ -180,7 +180,6 @@ class TodoSettingsView: UIStackView {
         static let verticalPadding: CGFloat = 10
         static let horizontalPadding: CGFloat = 16
     }
-    
 }
 
 extension Date {
